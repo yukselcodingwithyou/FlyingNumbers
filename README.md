@@ -10,11 +10,6 @@ Fly as far as possible while building the highest number you can. Passing pipes 
 - **Pipes:** hitting a pipe ends the run.
 
 ## Getting Started
-### Requirements
-- Unity **2021.3.0f1** or newer (see `ProjectSettings/ProjectVersion.txt` for the exact version).
-- The project references required packages (including the **Input System**) in
-  `Packages/manifest.json`, so Unity will automatically install them when you
-  open the project.
 
 ### Opening and Running
 1. Launch Unity Hub and add this repository's folder as a project.
