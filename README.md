@@ -10,9 +10,6 @@ Fly as far as possible while building the highest number you can. Passing pipes 
 - **Pipes:** hitting a pipe ends the run.
 
 ## Getting Started
-### Requirements
-- Unity **2021.3.0f1** or newer.
-- Install the **Input System** package from the Package Manager.
 
 ### Opening and Running
 1. Launch Unity Hub and add this repository's folder as a project.
@@ -30,7 +27,7 @@ Fly as far as possible while building the highest number you can. Passing pipes 
 - `Pipe.cs` awards a point when the player successfully passes a pipe.
 
 ### Attaching scripts
-1. Import the **Input System** package and create an Input Actions asset with a `Flap` action bound to the space bar and primary press (mouse or touch).
+1. Create an Input Actions asset with a `Flap` action bound to the space bar and primary press (mouse or touch). Unity will prompt to enable the **Input System** if it is not already active.
 2. Add the `PlayerController` component to your player sprite and assign the `flapAction` field with the `Flap` action from the asset. Ensure the sprite also has `Rigidbody2D` and `Animator` components with a `Flap` trigger.
 3. For operator sprites (e.g. `+1`), add the `Operator` component and set the type and value in the Inspector.
 4. Pipe colliders should have the `Pipe` tag so that the player triggers game over on contact.
