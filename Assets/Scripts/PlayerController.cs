@@ -94,6 +94,8 @@ public class PlayerController : MonoBehaviour
         if (operatorComponent != null)
         {
             ApplyOperator(operatorComponent);
+            if (ScoreManager.Instance != null)
+                ScoreManager.Instance.AddScore(1);
             Destroy(collision.gameObject);
         }
     }
@@ -143,6 +145,7 @@ public class PlayerController : MonoBehaviour
         isGameOver = true;
         rb.velocity = Vector2.zero;
         rb.isKinematic = true;
-        // Additional game over logic (UI, restart, etc.) can be added here
+        if (ScoreManager.Instance != null)
+            ScoreManager.Instance.ShowGameOver();
     }
 }

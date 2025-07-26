@@ -6,6 +6,9 @@ A Flappy Bird style math game.
 - `Operator.cs` is added to operator objects (`+1`, `-2`, `*3`, etc.) to define the mathematical operation applied when the player collides with them.
 - `Spawner.cs` periodically spawns pipe obstacles with a configurable gap and can
   randomly place operator-number prefabs inside that gap.
+- `ScoreManager.cs` keeps track of the player's score and high score, displaying
+  them on the UI and exposing a restart method for the game over menu.
+- `Pipe.cs` awards a point when the player successfully passes a pipe.
 
 ### Attaching scripts
 1. Import the **Input System** package and create an Input Actions asset with a `Flap` action bound to the space bar and primary press (mouse or touch).
