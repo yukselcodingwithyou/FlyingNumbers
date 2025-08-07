@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Tracks the player's score and high score using PlayerPrefs and updates the UI.
 /// Also exposes a restart method for the Game Over UI button.
+/// Enhanced with events for level progression system.
 /// </summary>
 public class ScoreManager : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class ScoreManager : MonoBehaviour
     public Text gameOverScoreText;
     [Tooltip("Text displaying the high score in the game over panel")]
     public Text gameOverHighScoreText;
+
+    // Events for other systems
+    public System.Action<int> OnScoreUpdated;
 
     private int score;
     private int highScore;
@@ -52,6 +56,9 @@ public class ScoreManager : MonoBehaviour
             PlayerPrefs.SetInt(HighScoreKey, highScore);
         }
         UpdateScoreUI();
+        
+        // Notify other systems of score change
+        OnScoreUpdated?.Invoke(score);
     }
 
     private void UpdateScoreUI()
@@ -92,6 +99,35 @@ public class ScoreManager : MonoBehaviour
     public void Restart()
     {
         ResetScore();
+        
+        // Reset level manager
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.ResetLevel();
+        }
+        
+        // Reset coin manager
+        if (CoinManager.Instance != null)
+        {
+            CoinManager.Instance.ResetCurrentCoins();
+        }
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    
+    /// <summary>
+    /// Gets the current score
+    /// </summary>
+    public int GetScore()
+    {
+        return score;
+    }
+    
+    /// <summary>
+    /// Gets the current high score
+    /// </summary>
+    public int GetHighScore()
+    {
+        return highScore;
     }
 }
