@@ -100,6 +100,42 @@ public class GameManager : MonoBehaviour
             GameObject audioManager = new GameObject("AudioManager");
             audioManager.AddComponent<AudioManager>();
         }
+
+        if (MissionManager.Instance == null)
+        {
+            GameObject missionManager = new GameObject("MissionManager");
+            missionManager.AddComponent<MissionManager>();
+        }
+
+        if (CharacterManager.Instance == null)
+        {
+            GameObject characterManager = new GameObject("CharacterManager");
+            characterManager.AddComponent<CharacterManager>();
+        }
+
+        if (EffectsManager.Instance == null)
+        {
+            GameObject effectsManager = new GameObject("EffectsManager");
+            effectsManager.AddComponent<EffectsManager>();
+        }
+
+        if (TutorialManager.Instance == null)
+        {
+            GameObject tutorialManager = new GameObject("TutorialManager");
+            tutorialManager.AddComponent<TutorialManager>();
+        }
+
+        if (AdManager.Instance == null)
+        {
+            GameObject adManager = new GameObject("AdManager");
+            adManager.AddComponent<AdManager>();
+        }
+
+        if (PurchaseManager.Instance == null)
+        {
+            GameObject purchaseManager = new GameObject("PurchaseManager");
+            purchaseManager.AddComponent<PurchaseManager>();
+        }
     }
 
     private IEnumerator AutoStartGameCoroutine()
