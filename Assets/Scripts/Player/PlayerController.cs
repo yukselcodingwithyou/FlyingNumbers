@@ -29,12 +29,17 @@ public class PlayerController : MonoBehaviour
     [Header("Shield System")]
     [SerializeField] private int maxShields = 3; // Maximum shields the player can have
     
+    [Header("Health System")]
+    [SerializeField] private int maxHealth = 3; // Maximum health the player can have
+    [SerializeField] private int currentHealth = 3; // Current health
+    
     [Header("Animation")]
     [SerializeField] private CharacterAnimationManager characterAnimationManager; // Manages wing and feet animations
     
     // Events for other systems to listen to
     public static System.Action<int> OnNumberChanged;
     public static System.Action<int> OnShieldsChanged;
+    public static System.Action<int> OnHealthChanged;
     public static System.Action OnPlayerDeath;
 
     private Rigidbody2D rb;
@@ -53,6 +58,7 @@ public class PlayerController : MonoBehaviour
         // Initialize with starting number and no shields
         currentNumber = 1;
         currentShields = 0;
+        currentHealth = maxHealth;
         
         UpdateNumberText();
         UpdateShieldVisual();
@@ -60,6 +66,7 @@ public class PlayerController : MonoBehaviour
         // Notify other systems of initial values
         OnNumberChanged?.Invoke(currentNumber);
         OnShieldsChanged?.Invoke(currentShields);
+        OnHealthChanged?.Invoke(currentHealth);
     }
 
     private void OnEnable()
@@ -175,16 +182,16 @@ public class PlayerController : MonoBehaviour
     }
     
     /// <summary>
-    /// Handles collision with obstacles (pipes, mines)
+    /// Takes damage from obstacles or other sources
     /// </summary>
-    private void HandleObstacleCollision()
+    public void TakeDamage(int amount)
     {
-        if (isInvincible)
+        if (isInvincible || isGameOver)
             return;
             
         if (currentShields > 0)
         {
-            // Use shield
+            // Use shield to absorb damage
             currentShields--;
             UpdateShieldVisual();
             OnShieldsChanged?.Invoke(currentShields);
@@ -195,8 +202,27 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            GameOver();
+            // Take health damage
+            currentHealth = Mathf.Max(0, currentHealth - amount);
+            OnHealthChanged?.Invoke(currentHealth);
+            
+            // Add visual feedback for health damage
+            if (animator != null)
+                animator.SetTrigger("TakeDamage");
+            
+            if (currentHealth <= 0)
+            {
+                GameOver();
+            }
         }
+    }
+    
+    /// <summary>
+    /// Handles collision with obstacles (pipes, mines) - Legacy method maintained for compatibility
+    /// </summary>
+    private void HandleObstacleCollision()
+    {
+        TakeDamage(1); // Default damage for legacy obstacles
     }
     
     /// <summary>
@@ -372,5 +398,21 @@ public class PlayerController : MonoBehaviour
     public CharacterAnimationManager GetAnimationManager()
     {
         return characterAnimationManager;
+    }
+    
+    /// <summary>
+    /// Gets current health value
+    /// </summary>
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+    
+    /// <summary>
+    /// Gets maximum health value
+    /// </summary>
+    public int GetMaxHealth()
+    {
+        return maxHealth;
     }
 }
