@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour
     [Header("Shield System")]
     [SerializeField] private int maxShields = 3; // Maximum shields the player can have
     
+    [Header("Animation")]
+    [SerializeField] private CharacterAnimationManager characterAnimationManager; // Manages wing and feet animations
+    
     // Events for other systems to listen to
     public static System.Action<int> OnNumberChanged;
     public static System.Action<int> OnShieldsChanged;
@@ -112,7 +115,13 @@ public class PlayerController : MonoBehaviour
     private void Flap()
     {
         rb.velocity = Vector2.up * flapForce;
-        if (animator != null)
+        
+        // Use new animation system if available, fallback to old system
+        if (characterAnimationManager != null)
+        {
+            characterAnimationManager.TriggerFlapAndKick();
+        }
+        else if (animator != null)
         {
             animator.SetTrigger("Flap");
         }
@@ -355,5 +364,13 @@ public class PlayerController : MonoBehaviour
     public void SetScale(float scale)
     {
         transform.localScale = Vector3.one * scale;
+    }
+    
+    /// <summary>
+    /// Gets the character animation manager
+    /// </summary>
+    public CharacterAnimationManager GetAnimationManager()
+    {
+        return characterAnimationManager;
     }
 }
