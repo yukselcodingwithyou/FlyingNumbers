@@ -25,6 +25,11 @@ public static class PrefabAutoBuilder
 
         // Obstacle from Mine template
         DuplicateFromTemplate("Obstacles/Mine", "Obstacles/Pipe");
+        
+        // New obstacles from Mine template
+        DuplicateFromTemplate("Obstacles/Mine", "Obstacles/MovingSpikes");
+        DuplicateFromTemplate("Obstacles/Mine", "Obstacles/RotatingBlades");
+        DuplicateFromTemplate("Obstacles/Mine", "Obstacles/LaserBeams");
 
         EditorUtility.DisplayDialog("Prefab Builder", "Prefab creation done. You may need to assign sprites.", "OK");
     }

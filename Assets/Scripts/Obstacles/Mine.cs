@@ -2,10 +2,13 @@ using UnityEngine;
 
 /// <summary>
 /// Mine obstacle that moves leftward and up/down in a sine wave pattern.
-/// Animated and destroys the player on collision unless they have a shield.
+/// Animated and deals damage to the player on collision unless they have a shield.
 /// </summary>
 public class Mine : MonoBehaviour
 {
+    [Header("Damage")]
+    [SerializeField] private int damageAmount = 1; // Damage dealt to player on collision
+    
     [Header("Movement")]
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private float verticalAmplitude = 2f; // Up/down movement range
@@ -55,8 +58,11 @@ public class Mine : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Let the player handle the collision
-            // The PlayerController will check for shields and handle the damage
+            PlayerController playerController = other.GetComponent<PlayerController>();
+            if (playerController != null)
+            {
+                playerController.TakeDamage(damageAmount);
+            }
             
             // Add explosion effect
             CreateExplosionEffect();

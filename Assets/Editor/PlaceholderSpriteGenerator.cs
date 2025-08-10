@@ -31,6 +31,13 @@ public static class PlaceholderSpriteGenerator
         CreateSpriteTexture("Shield", new Color(0.2f, 0.8f, 1.0f));
         CreateSpriteTexture("Slowdown", new Color(0.6f, 0.6f, 1.0f));
         CreateSpriteTexture("Pipe", new Color(0.2f, 0.8f, 0.2f));
+        
+        // New obstacle sprites with distinct colors
+        CreateSpriteTexture("MovingSpikes", new Color(0.8f, 0.2f, 0.2f)); // Red spikes
+        CreateSpriteTexture("RotatingBlades", new Color(0.7f, 0.7f, 0.7f)); // Silver blades
+        CreateSpriteTexture("LaserBeams", new Color(0.2f, 0.9f, 1.0f)); // Cyan lasers
+        CreateSpriteTexture("LaserBeam_Active", new Color(1.0f, 0.4f, 0.9f)); // Magenta for active beam
+        CreateSpriteTexture("LaserBeam_Charging", new Color(1.0f, 1.0f, 0.2f)); // Yellow for charging
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
